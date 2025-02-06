@@ -3,11 +3,25 @@ from rest_framework.response import Response
 from rest_framework import status
 from .authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.views import ObtainAuthToken
 
 from rest_framework import generics
-from .serializers import RegisterSerializer, UserSerializer
+from .serializers import RegisterSerializer , UserSerializer
 from rest_framework.authtoken.models import Token
 
+class LoginView(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'user' : UserSerializer(user).data,
+            'token': token.key
+            })
+
+login_View = LoginView.as_view()
+    
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
