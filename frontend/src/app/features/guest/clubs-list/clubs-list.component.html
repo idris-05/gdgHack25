@@ -1,0 +1,34 @@
+<div class="flex">
+  <app-sidebar></app-sidebar>
+  <div class="p-6">
+    <h1 class="text-2xl font-bold text-black mb-4">Clubs of Algeria:</h1>
+    <div class="grid grid-cols-3 gap-6">
+      <div
+        *ngFor="let club of clubs"
+        class="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition"
+        (click)="goToClub(club.id)"
+      >
+        <img
+          [src]="club.banner"
+          alt="{{ club.name }}"
+          class="w-full h-40 object-cover"
+        />
+
+        <div class="p-4">
+          <h2 class="text-xl font-bold text-black">{{ club.name }}</h2>
+          <p class="text-gray-600">{{ club.description }}</p>
+
+          <!-- Star Rating -->
+          <div class="flex mt-2">
+            <span *ngFor="let star of [1, 2, 3, 4, 5]" class="text-yellow-400">
+              <ng-container *ngIf="star <= club.rating">★</ng-container>
+              <ng-container *ngIf="star > club.rating" class="text-gray-300"
+                >☆</ng-container
+              >
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
