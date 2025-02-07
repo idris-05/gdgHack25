@@ -26,6 +26,7 @@ export class ApiDataService {
     });
     return this.http.post<T>(url, data, { headers });
   }
+
   get<T>(endpoint: string, token: string): Observable<T> {
     const url = `${this.baseUrl}/${endpoint}`;
     const headers = new HttpHeaders({
@@ -43,5 +44,27 @@ export class ApiDataService {
     });
     return this.http.put<T>(url, data, { headers });
   }
+  //---------------------------------------------------auth methodes:
+  login(username: string, password: string) {
+    return this.http.post(
+      `${this.baseUrl}/login/`,
+      { username, password },
+      {
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
+  logout() {
+    const token = localStorage.getItem('accessToken');
+    return this.http.post(
+      `${this.baseUrl}/logout/`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+  }
+
   //--------------------------------------------------- Specific methodes:
 }

@@ -9,8 +9,7 @@ import { NavigationService } from '../../services/navigation.service';
 })
 export class HomeComponent {
   constructor(private navigationService: NavigationService) {}
-  Move(){
-    this.navigationService.navigateTo("login");
+  Move() {
+    this.navigationService.navigateTo('login');
   }
-
 }
