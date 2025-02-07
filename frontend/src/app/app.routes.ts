@@ -7,6 +7,9 @@ import { ExplorComponent } from './features/guest/posts/explor/explor.component'
 import { InterestComponent } from './features/guest/posts/interest/interest.component';
 import { DisplayRoadmapComponent } from './features/guest/display-roadmap/display-roadmap.component';
 import { ProfileComponent } from './features/guest/profile/profile.component';
+import { ResourcePageComponent } from './features/clubuser/resource-page/resource-page.component';
+import { PostPageComponent } from './features/clubuser/post-page/post-page.component';
+import { AlumniPageComponent } from './features/clubuser/alumni-page/alumni-page.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent, title: 'Home' },
@@ -25,5 +28,12 @@ export const routes: Routes = [
   { path: 'explore-posts', component: ExplorComponent, title: 'Explore' },
   { path: 'interest-posts', component: InterestComponent, title: 'Interest' },
   { path: 'profile', component: ProfileComponent, title: 'Profile' },
+  {
+    path: 'club-user',
+    component: ResourcePageComponent,
+    title: 'Clubuser Ressources',
+  },
+  { path: 'creat-post', component: PostPageComponent, title: 'Post Creation' },
+  { path: 'alumni', component: AlumniPageComponent, title: 'Alumni Creation ' },
   { path: '**', redirectTo: 'home' },
 ];

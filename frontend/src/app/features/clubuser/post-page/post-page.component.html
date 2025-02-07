@@ -1,0 +1,66 @@
+<div class="flex h-screen">
+  <!-- Sidebar -->
+  <app-sidebarclubuser class="h-screen"></app-sidebarclubuser>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-8 ml-auto w-[600px] overflow-auto">
+    <h1 class="text-2xl font-bold mb-6">Create a Post</h1>
+
+    <form class="bg-gray-100 p-6 rounded shadow-lg max-w-2xl mx-auto relative overflow-auto">
+      <!-- Post Type -->
+      <label class="block mb-2 font-semibold">Post Type</label>
+      <select [(ngModel)]="newPost.type" name="type" class="w-full p-2 mb-4 border rounded">
+        <option value="event">Event</option>
+        <option value="project">Project</option>
+      </select>
+
+      <!-- Start Date (if Event) -->
+      <div *ngIf="newPost.type === 'event'">
+        <label class="block mb-2 font-semibold">Start Date</label>
+        <input [(ngModel)]="newPost.startDate" type="date" name="startDate" class="w-full p-2 mb-4 border rounded" />
+      </div>
+
+      <!-- GitHub Link (if Project) -->
+      <div *ngIf="newPost.type === 'project'">
+        <label class="block mb-2 font-semibold">GitHub Repository</label>
+        <input [(ngModel)]="newPost.githubLink" type="url" name="githubLink" placeholder="https://github.com/your-project"
+          class="w-full p-2 mb-4 border rounded" />
+      </div>
+
+      <!-- Description -->
+      <label class="block mb-2 font-semibold">Description</label>
+      <textarea [(ngModel)]="newPost.description" name="description" rows="3" class="w-full p-2 mb-4 border rounded"></textarea>
+
+      <!-- Tags -->
+      <label class="block mb-2 font-semibold">Tags</label>
+      <div class="flex">
+        <input [(ngModel)]="tagInput" (keyup.enter)="addTag()" type="text" name="tagInput" placeholder="Add a tag"
+          class="flex-1 p-2 border rounded" />
+        <button type="button" (click)="addTag()" class="ml-2 bg-blue-500 text-white px-3 py-2 rounded">+ Add</button>
+      </div>
+
+      <div class="mt-2 flex flex-wrap">
+        <span *ngFor="let tag of newPost.tags; let i = index" class="bg-gray-300 text-sm px-2 py-1 rounded-full mr-2">
+          {{ tag }} <button (click)="removeTag(i)" class="text-red-500 ml-1">✖</button>
+        </span>
+      </div>
+
+      <!-- Visibility -->
+      <label class="block mt-4 mb-2 font-semibold">Visibility</label>
+      <select [(ngModel)]="newPost.visibility" name="visibility" class="w-full p-2 mb-4 border rounded">
+        <option value="public">Public</option>
+        <option value="private">Private</option>
+      </select>
+
+      <!-- Upload Image -->
+      <label class="block mb-2 font-semibold">Upload Image</label>
+      <input type="file" (change)="handleFileInput($event)" class="w-full p-2 mb-4 border rounded" />
+
+      <!-- Buttons -->
+      <div class="flex justify-end space-x-2">
+        <button type="button" (click)="submitPost()" class="bg-green-500 text-white px-4 py-2 rounded">Confirm</button>
+        <button type="button" (click)="resetForm()" class="bg-gray-400 text-white px-4 py-2 rounded">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+{
+    "/api": {
+      "target": "https://roadmap.sh",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/api": ""
+      }
+    }
+  }
+  
