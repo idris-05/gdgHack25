@@ -10,6 +10,7 @@ export class NavigationService {
   navigateTo(path: string) {
     //This method changes the route without reloading the page.
     //It keeps the application state intact.
+    console.log(path)
     this.router.navigate([path]);
   }
 }

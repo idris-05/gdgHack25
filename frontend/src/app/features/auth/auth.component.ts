@@ -19,7 +19,7 @@ export class AuthComponent {
   ) {}
 
   onSubmit() {
-    this.navigationService.navigateTo('guest-clubs');
+    this.navigationService.navigateTo('club-user');
     // this.apiDataService
     //   .login(this.UserInfo.username, this.UserInfo.password)
     //   .subscribe({
