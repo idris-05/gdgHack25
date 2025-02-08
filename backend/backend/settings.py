@@ -65,7 +65,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'authentication',
     'clubs',
-    'models',
+    'models_app',
     'posts',
     'profiles',
     'resources',
