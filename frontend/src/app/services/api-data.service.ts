@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 //after installing the json-server.
 export class ApiDataService {
   constructor(private http: HttpClient) {}
-  private baseUrl = '';
+  private baseUrl = 'http://127.0.0.1:8000';
 
   //---------------------------------------------------Geneal methodes:
   //The <T> makes the method flexible to work with different data types.
@@ -47,7 +47,7 @@ export class ApiDataService {
   //---------------------------------------------------auth methodes:
   login(username: string, password: string) {
     return this.http.post(
-      `${this.baseUrl}/login/`,
+      `${this.baseUrl}/api/auth/login`,
       { username, password },
       {
         headers: { 'Content-Type': 'application/json' },

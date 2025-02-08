@@ -19,15 +19,14 @@ export class AuthComponent {
   ) {}
 
   onSubmit() {
-   
-    this.apiDataService
+    this.navigationService.navigateTo('clubs-list');
+  /*  this.apiDataService
       .login(this.UserInfo.username, this.UserInfo.password)
       .subscribe({
         next: (response: any) => {
           console.log(response);
           localStorage.setItem('accessToken', response.token);
-          localStorage.setItem('username', response.user.username);
-          localStorage.setItem('id', response.user.id);
+          localStorage.setItem('username', response.user);
           this.navigationService.navigateTo('clubs-list');
         },
         error: (err) => {
@@ -35,5 +34,5 @@ export class AuthComponent {
           alert('Login failed');
         },
       });
-  }
-}
+  }*/
+}}
