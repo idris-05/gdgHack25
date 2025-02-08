@@ -19,8 +19,13 @@ export class AuthComponent {
   ) {}
 
   onSubmit() {
-    this.navigationService.navigateTo('clubs-list');
-  /*  this.apiDataService
+    if (this.UserInfo.username === 'club') {
+      this.navigationService.navigateTo('club-user');
+    } else if (this.UserInfo.username === 'guest') {
+      this.navigationService.navigateTo('clubs-list');
+    }
+
+    /*  this.apiDataService
       .login(this.UserInfo.username, this.UserInfo.password)
       .subscribe({
         next: (response: any) => {
@@ -35,4 +40,5 @@ export class AuthComponent {
         },
       });
   }*/
-}}
+  }
+}

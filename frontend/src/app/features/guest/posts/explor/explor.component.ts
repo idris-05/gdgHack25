@@ -11,26 +11,27 @@ import { NgIf,NgClass, NgFor } from '@angular/common';
 export class ExplorComponent {
   posts = [
     {
-      title: 'Building cool things with Angular!',
-      description: 'A guide on how to create modern web apps with Angular.',
+      title: 'GIP',
+      description:
+        'GIP is a competition designed to facilitate the integration of new members into GDG Algiers by helping them understand how the club operates.',
       type: 'Project',
-      githubLink: 'https://github.com',
+      githubLink: 'https://www.gdgalgiers.com/projects/gip',
       date: '',
-      imageUrl: '/assets/angular-post.jpg',
-      likes: 0,
+      imageUrl: '/assets/GIP.png',
+      likes: 390,
       isLiked: false,
     },
     {
-      title: 'GDG Algiers Tech Meetup',
-      description: 'Join us for an exciting tech talk and networking event!',
+      title: 'GDG Internal Hackathon',
+      description:
+        'he first day of the GDG Internal Hackathon has ended, and what an exciting start!',
       type: 'Event',
       githubLink: '',
       date: '2024-03-15',
-      imageUrl: '/assets/se.jpg',
-      likes: 0,
+      imageUrl: '/assets/GHack.png',
+      likes: 999,
       isLiked: false,
     },
-    
   ];
   selectedPost: any = null;
   openPost(post: any) {

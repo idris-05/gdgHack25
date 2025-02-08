@@ -17,20 +17,19 @@ export class ClubsListComponent {
       banner: '/assets/gdg_algiers_cover.jpg',
       rating: 5,
     },
-
-    {
-      id: 2,
-      name: 'ShellMates',
-      description: 'Learn ethical hacking and security practices.',
-      banner: '/assets/shellmates_club_cover.jpg',
-      rating: 3,
-    },
     {
       id: 3,
       name: 'XMediaClub',
       description: 'Exploring the world of AI and Machine Learning.',
       banner: '/assets/X.png',
       rating: 4,
+    },
+    {
+      id: 2,
+      name: 'ShellMates',
+      description: 'Learn ethical hacking and security practices.',
+      banner: '/assets/shellmates_club_cover.jpg',
+      rating: 3,
     },
   ];
 

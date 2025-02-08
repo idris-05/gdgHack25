@@ -11,11 +11,11 @@ import { Router } from '@angular/router';
   styleUrl: './display-club.component.css',
 })
 export class DisplayClubComponent {
-  constructor (private router: Router){}
+  constructor(private router: Router) {}
   user = {
     name: 'GDG Algiers',
     bio: 'GDG For Once GDG For Everrrr!',
-    followers: 200,
+    followers: '1000',
     following: 0,
     isFollowing: false,
   };
@@ -31,23 +31,25 @@ export class DisplayClubComponent {
 
   posts = [
     {
-      title: 'Building cool things with Angular!',
-      description: 'A guide on how to create modern web apps with Angular.',
+      title: 'GIP',
+      description:
+        'GIP is a competition designed to facilitate the integration of new members into GDG Algiers by helping them understand how the club operates.',
       type: 'Project',
-      githubLink: 'https://github.com',
+      githubLink: 'https://www.gdgalgiers.com/projects/gip',
       date: '',
-      imageUrl: '/assets/angular-post.jpg',
-      likes: 0,
+      imageUrl: '/assets/GIP.png',
+      likes: 390,
       isLiked: false,
     },
     {
-      title: 'GDG Algiers Tech Meetup',
-      description: 'Join us for an exciting tech talk and networking event!',
+      title: 'GDG Internal Hackathon',
+      description:
+        'he first day of the GDG Internal Hackathon has ended, and what an exciting start!',
       type: 'Event',
       githubLink: '',
       date: '2024-03-15',
-      imageUrl: '/assets/se.jpg',
-      likes: 0,
+      imageUrl: '/assets/GHack.png',
+      likes: 999,
       isLiked: false,
     },
   ];
@@ -59,13 +61,20 @@ export class DisplayClubComponent {
       description:
         'Learn frontend, backend, and DevOps to become a full-stack dev.',
     },
-    
+    {
+      id: 2,
+      name: 'Blockchain Developer Roadmap',
+      description:
+        'Master the fundamentals of blockchain, smart contracts, and decentralized applications (DApps). Learn Solidity, Ethereum, and Web3 development.',
+    },
   ];
 
   alumni = [
-    { name: 'Alice Johnson', email: 'name@google.com' },
-    { name: 'Bob Smith', email: 'example@esi.dz' },
-    { name: 'Charlie Lee', email: 'hero@gdg.dz' },
+    { name: 'Fares Mezenner', email: 'alumni@gdg.dz' },
+    { name: 'Sofiane Yekene', email: 'alumni@gdg.dz' },
+    { name: 'Ilyes Arabet', email: 'alumni@gdg.dz' },
+    { name: 'Ayoub Kasmi', email: 'alumni@gdg.dz' },
+    { name: 'Aymen Mougari', email: 'alumni@gdg.dz' },
   ];
 
   agenda = this.posts.map((post) => ({
@@ -78,7 +87,7 @@ export class DisplayClubComponent {
   openPost(post: any) {
     this.selectedPost = post;
     console.log(post);
-    console.log("I am herw");
+    console.log('I am herw');
   }
 
   closePost() {
