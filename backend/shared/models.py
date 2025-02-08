@@ -28,10 +28,10 @@ class Alumni(models.Model):
 
 class Club(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_image = models.URLField() #! Stored in Firebase
+    profile_image = models.URLField(blank=True , null = True) #! Stored in Firebase
     description = models.TextField()
     number_of_followers = models.IntegerField(default=0)
-    alumni = models.ManyToManyField(Alumni, related_name="alumnis_club")
+    alumni = models.ManyToManyField(Alumni, related_name="alumnis_club",blank=True )
     def __str__(self):
         return f"Club: {self.id} - {self.user.username}"
 
