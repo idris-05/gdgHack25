@@ -17,7 +17,7 @@ def upload_file(request):
         
         return JsonResponse({
             'file_url': response['secure_url'],
-            'public_id': response['public_id'], # we can remove this returned value as it is not needed
+            # 'public_id': response['public_id'], # we can remove this returned value as it is not needed
             })
     
     return JsonResponse({'error': 'No file uploaded'}, status=400)

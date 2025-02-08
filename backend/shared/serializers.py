@@ -1,6 +1,6 @@
 # Serializers
 from rest_framework import serializers
-from .models import User, Post, Resource, Club, Profile
+from .models import User, Post, Resource, Club, Tag, Student
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,8 +21,19 @@ class ClubSerializer(serializers.ModelSerializer):
     class Meta:
         model = Club
         fields = '__all__'
-
-class ProfileSerializer(serializers.ModelSerializer):
+        
+class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Profile
+        model = Tag
         fields = '__all__'
+
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = '__all__'
+        
+        
+# class ProfileSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Profile
+#         fields = '__all__'
