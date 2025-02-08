@@ -49,3 +49,34 @@ class ResourceListSerializer(serializers.ModelSerializer):
 
     # def get_tags(self, obj):
     #     return [tag.name for tag in obj.tags.all()]  # Return list of tag names
+
+
+
+from rest_framework import serializers
+from shared.models import Roadmap, LessonPart, Resource, Test
+
+class ResourceRequeteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Resource
+        fields = ["id", "name", "description", "tags", "level", "file_url"]
+
+class TestRequeteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Test
+        fields = ["id", "liste_question", "reponses"]
+
+class LessonPartRequeteSerializer(serializers.ModelSerializer):
+    resource = ResourceRequeteSerializer()
+    test = TestRequeteSerializer(allow_null=True)
+
+    class Meta:
+        model = LessonPart
+        fields = ["id", "resource", "test"]
+
+class RoadmapRequeteSerializer(serializers.ModelSerializer):
+    lesson_parts = LessonPartRequeteSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Roadmap
+        fields = ["id", "title", "author", "description", "tags", "visibility", "lesson_parts"]
+        read_only_fields = ["id", "author", "lesson_parts"]

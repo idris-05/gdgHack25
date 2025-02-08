@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/upload/', include('shared.urls')),
     path('api/posts/', include('posts.urls')),
     path('api/resources/', include('resources.urls')),
-]
+    path('api/roadmaps/', include('resources.urls')),
+    ]
