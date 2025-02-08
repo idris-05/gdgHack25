@@ -19,19 +19,21 @@ export class AuthComponent {
   ) {}
 
   onSubmit() {
-    this.navigationService.navigateTo('clubs-list');
-    // this.apiDataService
-    //   .login(this.UserInfo.username, this.UserInfo.password)
-    //   .subscribe({
-    //     next: (response: any) => {
-    //       console.log(response);
-    //       localStorage.setItem('accessToken', response.token);
-    //       this.navigationService.navigateTo('clubs-list');
-    //     },
-    //     error: (err) => {
-    //       console.error('Login failed:', err);
-    //       alert('Login failed');
-    //     },
-    //   });
+   
+    this.apiDataService
+      .login(this.UserInfo.username, this.UserInfo.password)
+      .subscribe({
+        next: (response: any) => {
+          console.log(response);
+          localStorage.setItem('accessToken', response.token);
+          localStorage.setItem('username', response.user.username);
+          localStorage.setItem('id', response.user.id);
+          this.navigationService.navigateTo('clubs-list');
+        },
+        error: (err) => {
+          console.error('Login failed:', err);
+          alert('Login failed');
+        },
+      });
   }
 }
