@@ -1,61 +1,113 @@
 <div class="flex">
     <!-- Sidebar -->
     <app-sidebarclubuser></app-sidebarclubuser>
-  
+
     <!-- Main Content -->
     <div class="flex-1 p-8">
-      <h1 class="text-2xl font-bold mb-6">Resource List</h1>
-  
-      <!-- Filter Bar -->
-      <div class="flex space-x-4 mb-4">
-        <input [(ngModel)]="searchTerm" (input)="applyFilters()" type="text" placeholder="Search by name" class="p-2 border rounded w-1/3" />
-        
-        <select [(ngModel)]="selectedType" (change)="applyFilters()" class="p-2 border rounded">
-          <option value="">All Types</option>
-          <option *ngFor="let res of resources" [value]="res.type">{{ res.type }}</option>
-        </select>
-        
-        <select [(ngModel)]="selectedLevel" (change)="applyFilters()" class="p-2 border rounded">
-          <option value="">All Levels</option>
-          <option *ngFor="let res of resources" [value]="res.level">{{ res.level }}</option>
-        </select>
-      </div>
-  
-      <!-- Add Button -->
-      <button (click)="openModal()" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">
-        + Add Resource
-      </button>
-      
-      <!-- Add Resource Modal -->
-      <div *ngIf="showModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
-          <h3 class="text-xl font-bold mb-4">Add a Resource</h3>
-      
-          <input [(ngModel)]="newResource.nom" type="text" placeholder="Name" class="w-full p-2 mb-2 border rounded" />
-          <input [(ngModel)]="newResource.description" type="text" placeholder="Description" class="w-full p-2 mb-2 border rounded" />
-          <input [(ngModel)]="newResource.type" type="text" placeholder="Type" class="w-full p-2 mb-2 border rounded" />
-          <input [(ngModel)]="newResource.level" type="text" placeholder="Level" class="w-full p-2 mb-2 border rounded" />
-          <input type="file" (change)="handleFileInput($event)" class="w-full p-2 mb-2 border rounded" />
-      
-          <div class="flex justify-end space-x-2">
-            <button (click)="addResource()" class="bg-blue-500 text-white px-4 py-2 rounded">Add</button>
-            <button (click)="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded">Cancel</button>
-          </div>
+        <h1 class="text-2xl font-bold mb-6">Resource List</h1>
+
+        <!-- Filter Bar -->
+        <div class="flex space-x-4 mb-4">
+            <input [(ngModel)]="searchTerm" (input)="applyFilters()" type="text" placeholder="Search by name"
+                class="p-2 border rounded w-1/3" />
+
+            <select [(ngModel)]="selectedType" (change)="applyFilters()" class="p-2 border rounded">
+                <option value="">All Types</option>
+                <option value="Video">Video</option>
+                <option value="PDF">PDF</option>
+            </select>
+
+            <select [(ngModel)]="selectedLevel" (change)="applyFilters()" class="p-2 border rounded">
+                <option value="">All Levels</option>
+                <option value="beginner">Beginner</option>
+                <option value="Medium">Medium</option>
+                <option value="Advanced">Advanced</option>
+            </select>
+            
+            <select [(ngModel)]="selectedTag" (change)="applyFilters()" class="p-2 border rounded">
+                <option value="">All Tags</option>
+                <option *ngFor="let tag of getUniqueTags()" [value]="tag">{{ tag }}</option>
+            </select>
+            
         </div>
-      </div>
-      
-      <!-- Filtered Resource List -->
-      <div class="space-y-4">
-        <div *ngFor="let resource of filteredResources; let i = index" class="bg-gray-100 p-4 rounded shadow flex justify-between">
-          <div>
-            <h2 class="font-semibold">{{ resource.nom }}</h2>
-            <p class="text-sm text-gray-600">{{ resource.description }}</p>
-            <p class="text-sm">Type: {{ resource.type }} | Level: {{ resource.level }}</p>
-          </div>
-          <button (click)="deleteResource(i)" class="bg-black-500 text-white px-3 py-1 rounded">
-            ❌
-          </button>
+
+        <!-- Add Button -->
+        <button (click)="openModal()" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">
+            + Add Resource
+        </button>
+
+        <!-- Add Resource Modal -->
+        <div *ngIf="showModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                <h3 class="text-xl font-bold mb-4">Add a Resource</h3>
+
+                <input [(ngModel)]="newResource.nom" type="text" placeholder="Name"
+                    class="w-full p-2 mb-2 border rounded" />
+                <input [(ngModel)]="newResource.description" type="text" placeholder="Description"
+                    class="w-full p-2 mb-2 border rounded" />
+
+                <!-- Type Selection -->
+                <select [(ngModel)]="newResource.type" class="w-full p-2 mb-2 border rounded">
+                    <option value="">Select a type</option>
+                    <option value="Video">Video</option>
+                    <option value="PDF">PDF</option>
+                </select>
+
+                <select [(ngModel)]="newResource.level" class="w-full p-2 mb-2 border rounded">
+                    <option value="">Select Level</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+                
+                <input type="file" (change)="handleFileInput($event)" class="w-full p-2 mb-2 border rounded" />
+
+                <!-- Tag Selection with Search -->
+                <div class="relative w-full mb-2">
+                    <input [(ngModel)]="tagInput" (input)="updateTagSuggestions()" type="text"
+                        placeholder="Search for a tag..." class="w-full p-2 border rounded" />
+
+                    <!-- Dropdown with filtered tags -->
+                    <ul *ngIf="tagSuggestions.length > 0" class="absolute w-full bg-white border rounded mt-1 shadow-md max-h-40 overflow-auto">
+                        <li *ngFor="let tag of tagSuggestions" 
+                            (click)="selectTag(tag)" 
+                            class="p-2 hover:bg-gray-200 cursor-pointer">
+                            {{ tag }}
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Display the selected tags -->
+                <div *ngIf="newResource.tags.length > 0" class="flex flex-wrap gap-2 mb-2">
+                    <span *ngFor="let tag of newResource.tags; let i = index"
+                        class="px-2 py-1 bg-gray-200 rounded flex items-center">
+                        {{ tag }}
+                        <button (click)="removeTag(i)" class="ml-2 text-red-500">❌</button>
+                    </span>
+                </div>
+
+                <div class="flex justify-end space-x-2">
+                    <button (click)="addResource()" class="bg-blue-500 text-white px-4 py-2 rounded">Add</button>
+                    <button (click)="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded">Cancel</button>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <!-- Filtered Resource List -->
+        <div class="space-y-4">
+            <div *ngFor="let resource of filteredResources; let i = index"
+                class="bg-gray-100 p-4 rounded shadow flex justify-between">
+                <div>
+                    <h2 class="font-semibold">{{ resource.nom }}</h2>
+                    <p class="text-sm text-gray-600">{{ resource.description }}</p>
+                    <p class="text-sm">Type: {{ resource.type }} | Level: {{ resource.level }} | Tags: 
+                        <span *ngFor="let tag of resource.tags" class="px-2 py-1 bg-green-200 rounded mx-1">{{ tag }}</span>
+                    </p>
+                </div>
+                <button (click)="deleteResource(i)" class="bg-black-500 text-white px-3 py-1 rounded">
+                    ❌
+                </button>
+            </div>
+        </div>
     </div>
 </div>

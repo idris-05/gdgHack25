@@ -10,6 +10,7 @@ import { ProfileComponent } from './features/guest/profile/profile.component';
 import { ResourcePageComponent } from './features/clubuser/resource-page/resource-page.component';
 import { PostPageComponent } from './features/clubuser/post-page/post-page.component';
 import { AlumniPageComponent } from './features/clubuser/alumni-page/alumni-page.component';
+import { RoadmapComponent } from './features/clubuser/roadmap/roadmap.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent, title: 'Home' },
@@ -35,5 +36,8 @@ export const routes: Routes = [
   },
   { path: 'creat-post', component: PostPageComponent, title: 'Post Creation' },
   { path: 'alumni', component: AlumniPageComponent, title: 'Alumni Creation ' },
+  {
+    path :'roadmap', component:RoadmapComponent , title : "roadmap Creation "
+  },
   { path: '**', redirectTo: 'home' },
 ];
