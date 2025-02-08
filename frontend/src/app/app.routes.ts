@@ -34,10 +34,11 @@ export const routes: Routes = [
     component: ResourcePageComponent,
     title: 'Clubuser Ressources',
   },
-  { path: 'creat-post', component: PostPageComponent, title: 'Post Creation' },
-  { path: 'alumni', component: AlumniPageComponent, title: 'Alumni Creation ' },
   {
     path :'roadmap', component:RoadmapComponent , title : "roadmap Creation "
   },
+  { path: 'creat-post', component: PostPageComponent, title: 'Post Creation' },
+  { path: 'alumni', component: AlumniPageComponent, title: 'Alumni Creation ' },
+
   { path: '**', redirectTo: 'home' },
 ];

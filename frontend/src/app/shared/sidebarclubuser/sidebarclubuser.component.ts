@@ -24,7 +24,7 @@ export class SidebarClubuserComponent {
   menuItems = [
     { name: 'Ressource', link: '/club-user', icon: '📰' },
     { name: 'Post', link: '/creat-post', icon: '📝' },
-    { name: 'Roadmap', link: '.', icon: '➡️' },
+    { name: 'Roadmap', link: '/roadmap', icon: '➡️' },
     {
       name: 'Alumni ',
       link: '/alumni',
