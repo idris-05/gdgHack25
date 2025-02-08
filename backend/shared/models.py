@@ -86,6 +86,7 @@ class Post(models.Model):
     image_url = models.URLField(blank=True, null=True)
     tags = models.ManyToManyField(Tag, related_name="posts")
     created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(Club, related_name="posts", on_delete=models.CASCADE)
 
 # Project Post Model
 class Project(Post):
