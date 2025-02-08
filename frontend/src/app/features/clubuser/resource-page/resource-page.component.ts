@@ -5,6 +5,7 @@ import { NgIf, NgFor } from '@angular/common';
 import { AlumniPageComponent } from "../alumni-page/alumni-page.component";
 import { SidebarComponent } from "../../../shared/sidebar/sidebar.component";
 
+
 @Component({
   selector: 'app-resource-page',
   templateUrl: './resource-page.component.html',
@@ -88,8 +89,40 @@ export class ResourcePageComponent {
     }
   
     this.resources.push({ ...this.newResource });
+    let myNumber: number = 10;
+
+    if (this.newResource.level == "beginner"){
+     myNumber = 50;
+
+
+
+    }
+    else if(this.newResource.level == "Medium"){
+
+      myNumber =100
+    }
+    else if(this.newResource.level=="Advanced"){
+
+      myNumber=150
+    }
+
+    const formData = new FormData();
+formData.append("name", this.newResource.nom);
+formData.append("description", this.newResource.description);
+formData.append("level", myNumber.toString());
+formData.append("file", this.newResource.file!);
+
+// ✅ Send tags as individual key-value pairs
+this.newResource.tags.forEach(tag => formData.append("tags", tag));
+
+/*this.http.post('http://127.0.0.1:8000/api/resources/', formData).subscribe(response => {
+  console.log("Upload successful:", response);
+});*/
+
+    this.newResource
     this.applyFilters();
     this.closeModal();
+    
   }
   
   deleteResource(index: number) {
