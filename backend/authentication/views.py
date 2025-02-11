@@ -8,6 +8,8 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework import generics
 from .serializers import RegisterSerializer , UserSerializer
 from rest_framework.authtoken.models import Token
+from shared.serializers import ClubSerializer, StudentSerializer
+
 
 class LoginView(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -15,10 +17,26 @@ class LoginView(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
+
+        # Determine user type
+        user_type = None
+        user_instance = None
+
+        if hasattr(user, "club"):
+            user_type = "club"
+            user_instance = ClubSerializer(user.club).data  # Serialize Club instance
+        elif hasattr(user, "student"):
+            user_type = "student"
+            user_instance = StudentSerializer(user.student).data  # Serialize Student instance
+        else:
+            user_type = "unknown"
+
         return Response({
-            'user' : UserSerializer(user).data,
-            'token': token.key
-            })
+            # "user":  UserSerializer(user).data,  # General user info
+            "user_type": user_type,  # Type of user
+            "user": user_instance,  # Club or Student details
+            "token": token.key
+        })
 
 login_View = LoginView.as_view()
     
