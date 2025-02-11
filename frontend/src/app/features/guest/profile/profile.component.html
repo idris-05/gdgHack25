@@ -1,0 +1,62 @@
+<div class="flex h-screen">
+    <!-- Sidebar -->
+    <app-sidebar class="w-64 shrink-0"></app-sidebar>
+  
+    <!-- Main Content -->
+    <div class="flex-1 p-6 bg-white rounded-lg overflow-auto">
+      <!-- Profile Header -->
+      <div class="flex items-center space-x-6">
+        <img class="w-24 h-24 rounded-full object-cover" [src]="user.image" alt="Profile Picture" />
+        <div>
+          <h2 class="text-xl font-bold text-black">{{ user.name }}</h2>
+          <p class="text-gray-600">Score: <span class="font-bold">{{ user.score }}</span></p>
+        </div>
+      </div>
+  
+      <!-- Sections -->
+      <div class="mt-6">
+        <!-- Enrolled Roadmaps -->
+        <div class="mb-6">
+          <h3 class="text-lg font-bold text-black">Enrolled Roadmaps</h3>
+          <div class="grid grid-cols-3 gap-4 mt-2">
+            <div
+              *ngFor="let roadmap of user.roadmaps"
+              class="bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200"
+            >
+              <h4 class="text-black font-bold">{{ roadmap.name }}</h4>
+              <p class="text-gray-600 text-sm">{{ roadmap.description }}</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Followed Clubs -->
+        <div class="mb-6">
+          <h3 class="text-lg font-bold text-black">Followed Clubs</h3>
+          <div class="grid grid-cols-3 gap-4 mt-2">
+            <div
+              *ngFor="let club of user.followedClubs"
+              class="bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200"
+            >
+              <h4 class="text-black font-bold">{{ club.name }}</h4>
+              <p class="text-gray-600 text-sm">{{ club.description }}</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Member of Clubs -->
+        <div>
+          <h3 class="text-lg font-bold text-black">Member of Clubs</h3>
+          <div class="grid grid-cols-3 gap-4 mt-2">
+            <div
+              *ngFor="let club of user.memberClubs"
+              class="bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200"
+            >
+              <h4 class="text-black font-bold">{{ club.name }}</h4>
+              <p class="text-gray-600 text-sm">{{ club.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

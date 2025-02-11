@@ -1,0 +1,47 @@
+<div
+  class="h-screen w-64 bg-gradient-to-b from-black to-gray-800 shadow-lg flex flex-col p-4 justify-between"
+>
+  <!-- User Info -->
+  <div>
+    <div class="mb-6 mt-14">
+      <h2 class="text-lg font-semibold text-white">{{ user.name }}</h2>
+      <p class="text-sm text-gray-400">{{ user.type }}</p>
+    </div>
+
+    <!-- Menu Items -->
+    <nav class="space-y-4">
+      <div *ngFor="let item of menuItems">
+        <!-- Main Item -->
+        <a
+          [routerLink]="item.link"
+          [class.bg-gray-700]="isActive(item.link)"
+          class="flex items-center space-x-3 p-3 rounded-lg text-white hover:bg-gray-700 transition"
+        >
+          <span [innerHTML]="item.icon"></span>
+          <span>{{ item.name }}</span>
+        </a>
+
+        <!-- Sub-Items for Posts -->
+        <div *ngIf="item.subItems" class="ml-6 space-y-2">
+          <a
+            *ngFor="let subItem of item.subItems"
+            [routerLink]="subItem.link"
+            [class.bg-gray-700]="isActive(subItem.link)"
+            class="flex items-center space-x-3 p-2 rounded-lg text-gray-300 hover:bg-gray-700 transition"
+          >
+            <span [innerHTML]="subItem.icon"></span>
+            <span>{{ subItem.name }}</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Logout Button -->
+  <button
+    class="w-full p-3 mt-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+    (click)="Logout()"
+  >
+    Logout
+  </button>
+</div>

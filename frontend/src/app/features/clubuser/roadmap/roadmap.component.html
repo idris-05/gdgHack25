@@ -1,0 +1,66 @@
+<div class="flex h-screen">
+    <!-- Sidebar Fixe à Gauche -->
+    <div class="w-64 bg-gray-800 text-white fixed h-full">
+        <app-sidebarclubuser></app-sidebarclubuser>
+    </div>
+
+    <!-- Contenu Principal à Droite (Défilement activé) -->
+    <div class="flex-1 ml-64 p-8 overflow-y-auto h-screen">
+        <h1 class="text-3xl font-bold mb-6">Learning Roadmap</h1>
+
+        <div class="space-y-6">
+            <div *ngFor="let step of roadmap" class="bg-gray-100 p-4 rounded shadow-md border-l-4"
+                [ngClass]="{
+                    'border-blue-500': step.level === 'Beginner',
+                    'border-yellow-500': step.level === 'Medium',
+                    'border-red-500': step.level === 'Advanced'
+                }">
+                
+                <h2 class="text-xl font-semibold">{{ step.step }}. {{ step.title }}</h2>
+                <p class="text-gray-700">{{ step.description }}</p>
+                <p class="text-sm text-gray-500">
+                    Type: {{ step.type }} | Level: 
+                    <span [ngClass]="{
+                        'text-blue-500': step.level === 'Beginner',
+                        'text-yellow-500': step.level === 'Medium',
+                        'text-red-500': step.level === 'Advanced'
+                    }">
+                        {{ step.level }}
+                    </span>
+                </p>
+
+                <!-- 📌 Affichage du Tag (1 seul par ressource) -->
+                <div class="mt-2">
+                    <span class="bg-blue-200 text-blue-800 px-2 py-1 rounded text-sm">
+                        {{ step.tag }}
+                    </span>
+                </div>
+
+                <!-- 📁 Affichage du fichier associé -->
+                <div *ngIf="step.file" class="mt-2">
+                    <a [href]="step.file" target="_blank" class="text-blue-600 underline">
+                        📂 Télécharger le fichier
+                    </a>
+                </div>
+
+                <!-- 🧠 Section Quiz (Affichage uniquement) -->
+                <div *ngIf="step.quizzes.length > 0" class="mt-4 p-4 bg-white rounded shadow">
+                    <h3 class="text-lg font-semibold">Quiz</h3>
+                    <div *ngFor="let quiz of step.quizzes" class="mt-2">
+                        <p class="font-medium">{{ quiz.question }}</p>
+                        <ul class="list-disc ml-6 text-gray-700">
+                            <li *ngFor="let option of quiz.options" 
+                                [ngClass]="{'text-green-600 font-bold': quiz.correctAnswers.includes(option)}">
+                                {{ option }}
+                            </li>
+                        </ul>
+                        <p class="text-green-600 font-semibold mt-2">
+                            ✔ Correct Answers: {{ quiz.correctAnswers.join(', ') }}
+                        </p>
+                    </div>
+                </div>
+                <!-- 🛑 Fin Section Quiz -->
+            </div>
+        </div>
+    </div>
+</div>

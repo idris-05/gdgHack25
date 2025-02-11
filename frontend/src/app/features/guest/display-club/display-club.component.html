@@ -1,0 +1,167 @@
+<div class="flex h-screen">
+  <!-- Sidebar -->
+  <app-sidebar class="w-64 shrink-0"></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-6 bg-white rounded-lg overflow-auto">
+    <!-- Profile Section -->
+    <div class="flex items-center space-x-6">
+      <img
+        class="w-24 h-24 rounded-full object-cover"
+        src="/assets/gdg-logo.png"
+        alt="Profile Picture"
+      />
+      <div>
+        <h2 class="text-xl font-bold text-black">{{ user.name }}</h2>
+        <p class="text-gray-600">{{ user.bio }}</p>
+        <div class="flex space-x-6 mt-2">
+          <div class="text-black">
+            <span class="font-bold">{{ user.followers }}</span> Followers
+          </div>
+          <div class="text-black">
+            <span class="font-bold">{{ user.following }}</span> Following
+          </div>
+        </div>
+        <!-- Follow Button -->
+        <button
+          class="mt-4 px-4 py-2 rounded-lg text-white"
+          [ngClass]="user.isFollowing ? 'bg-gray-500' : 'bg-blue-500'"
+          (click)="toggleFollow()"
+        >
+          {{ user.isFollowing ? "Unfollow" : "Follow" }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Section -->
+    <div class="flex justify-around mt-6 border-t border-gray-300 pt-4">
+      <button
+        *ngFor="let tab of tabs"
+        (click)="activeTab = tab.key"
+        class="px-4 py-2 text-black font-semibold hover:bg-gray-100 rounded-lg"
+        [class.border-b-2]="activeTab === tab.key"
+      >
+        {{ tab.name }}
+      </button>
+    </div>
+
+    <!-- Dynamic Content Section -->
+    <div class="mt-6">
+      <!-- Posts Section -->
+      <div *ngIf="activeTab === 'posts'" class="grid grid-cols-3 gap-4">
+        <div
+          *ngFor="let post of posts"
+          class="bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200"
+          (click)="openPost(post)"
+        >
+          <img
+            class="w-full h-40 object-cover rounded-lg mb-2"
+            [src]="post.imageUrl"
+            alt="{{ post.title }}"
+          />
+          <p class="text-black font-bold">{{ post.title }}</p>
+          <p class="text-gray-600 text-sm">{{ post.type }}</p>
+          <span class="text-gray-500 text-xs">{{ post.date }}</span>
+
+          <!-- Like Button -->
+          <div class="flex items-center space-x-2 mt-2">
+            <button
+              class="px-3 py-1 rounded-lg text-white"
+              [ngClass]="post.isLiked ? 'bg-red-500' : 'bg-gray-400'"
+              (click)="toggleLike(post); $event.stopPropagation()"
+            >
+              ❤️ {{ post.isLiked ? "Unlike" : "Like" }}
+            </button>
+            <span class="text-gray-700">{{ post.likes }} Likes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Roadmap Section -->
+      <div *ngIf="activeTab === 'roadmap'" class="bg-gray-100 p-4 rounded-lg">
+        <div
+          *ngFor="let roadmap of roadmaps"
+          class="bg-gray-100 p-4 rounded-lg"
+        >
+          <div class="flex flex-row justify-between">
+            <div>
+              <h3 class="text-black text-lg font-bold">{{ roadmap.name }}</h3>
+              <p class="text-gray-600">{{ roadmap.description }}</p>
+            </div>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded-lg" (click)="goToRoadmap(roadmap.id)">
+              Enroll
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alumni Section -->
+      <div *ngIf="activeTab === 'alumni'" class="bg-gray-100 p-4 rounded-lg">
+        <ul class="space-y-2">
+          <li *ngFor="let alum of alumni" class="p-2 border-b border-gray-300">
+            <p class="text-black font-bold">{{ alum.name }}</p>
+            <p class="text-gray-600 text-sm">{{ alum.email }}</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Agenda Section -->
+      <div *ngIf="activeTab === 'agenda'" class="bg-gray-100 p-4 rounded-lg">
+        <h3 class="text-black text-lg font-bold">Agenda</h3>
+        <ul class="text-gray-600">
+          <ng-container *ngFor="let event of agenda">
+            <li *ngIf="event.date">{{ event.date }} - {{ event.title }}</li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Post Modal -->
+<div
+  *ngIf="selectedPost"
+  class="fixed inset-0 flex items-center justify-center bg-opacity-50"
+  (click)="closePost()"
+>
+  <div
+    class="bg-white p-6 rounded-lg shadow-lg w-96"
+    (click)="$event.stopPropagation()"
+  >
+    <img
+      class="w-full h-40 object-cover rounded-lg mb-4"
+      [src]="selectedPost.imageUrl"
+      alt="{{ selectedPost.title }}"
+    />
+    <h2 class="text-xl font-bold text-black">{{ selectedPost.title }}</h2>
+    <p class="text-gray-600 mt-2">{{ selectedPost.description }}</p>
+
+    <p class="mt-4">
+      <span class="font-bold text-black">Type:</span> {{ selectedPost.type }}
+    </p>
+
+    <!-- Show event date if it's an event -->
+    <p *ngIf="selectedPost.type === 'Event'" class="mt-2">
+      <span class="font-bold text-black">Date:</span> {{ selectedPost.date }}
+    </p>
+
+    <!-- Show GitHub link if it's a project -->
+    <p *ngIf="selectedPost.type === 'Project'" class="mt-2">
+      <span class="font-bold text-black">GitHub:</span>
+      <a
+        [href]="selectedPost.githubLink"
+        target="_blank"
+        class="text-blue-500 underline"
+      >
+        View Repository
+      </a>
+    </p>
+
+    <!-- Close Button -->
+    <button
+      class="mt-6 px-4 py-2 bg-red-500 text-white rounded-lg"
+      (click)="closePost()"
+    >
+      Close
+    </button>
+  </div>
+</div>
