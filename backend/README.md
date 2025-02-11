@@ -7,7 +7,7 @@ Ensure you have the following installed:
 - Python (>= 3.8)
 - pip (latest version recommended)
 - Virtualenv (recommended but optional)
-- MySQL
+- PostgreSQL
 
 ### Installation
 After cloning the Repo:
